@@ -15,7 +15,7 @@ app.use(express.json());
 
 // for use session
 app.use(session({
-    secret:'!@#ASD123asd',
+    secret:'!@#ASD123asdf',
     resave: false,
     saveUninitialized: true
 }))
