@@ -80,8 +80,9 @@ export default class Login extends Component {
             });
     }
     render() {
+        //console.log("reload");
         return (
-            <form className="Login-base">
+            <div className="Login-base">
                 <input
                     type="text"
                     placeholder="이메일"
@@ -120,7 +121,7 @@ export default class Login extends Component {
                         로그인 체크
                     </button>
                 </div>
-            </form>
+            </div>
         )
     }
 }
