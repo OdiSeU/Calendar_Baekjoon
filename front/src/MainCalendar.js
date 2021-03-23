@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import DayOfTheWeek from "./DayofTheWeek";
 import AllDays from "./AllDays";
 import moment from "moment";
 
@@ -32,7 +31,6 @@ export default class MainCalendar extends Component {
   render() {
     return (
       <div className="MainCalendar-base">
-        <DayOfTheWeek />
         {this.Weeks(
           this.props.YMD,
           this.props.selected,

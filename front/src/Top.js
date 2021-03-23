@@ -1,4 +1,3 @@
-import moment from "moment";
 import React, { Component } from "react";
 import left from "./left.png";
 import right from "./right.png";
@@ -21,7 +20,7 @@ export default class Top extends Component {
               this.props.moveMonth(+1);
             }}
           >
-            <img src={right}></img>
+            <img src={right} alt="right"></img>
           </li>
           <li>
             <h2 className="Top-yearNmonth">{this.props.yearNmonth}</h2>
@@ -31,7 +30,7 @@ export default class Top extends Component {
               this.props.moveMonth(-1);
             }}
           >
-            <img src={left}></img>
+            <img src={left} alt="left"></img>
           </li>
         </ul>
       </div>
