@@ -60,7 +60,11 @@ export default class Login extends Component {
     // 회원 탈퇴
     Secede() {
         let path = 'http://localhost:4000/sign-secede';
-        axios.get(path)
+        let data = {
+            'email': document.querySelector('#email').value,
+            'password': document.querySelector('#password').value
+        }
+        axios.post(path, data)
             .then(res => {
                 console.log(res.data);
             })
