@@ -23,27 +23,27 @@ router.post('/crawl', (req, res) => {
     });
 });
 
-router.get('/sign-up', (req, res) => {
+router.post('/sign-up', (req, res) => {
     console.log(`access to '${req.url}'`);
-    LoginCtrl.signUp(DB_NAME, 'userdata', {email: 'asdf@gmail.com', password: '1234'})
+    LoginCtrl.signUp(DB_NAME, 'userdata', req.body)
     .then((data) => {
         console.log(data);
         res.json(data);
     })
 });
 
-router.get('/sign-in', (req, res) => {
+router.post('/sign-in', (req, res) => {
     console.log(`access to '${req.url}'`);
-    LoginCtrl.signIn(DB_NAME, 'userdata', {email: 'asdf@gmail.com', password: '1234'}, req.session)
+    LoginCtrl.signIn(DB_NAME, 'userdata', req.body, req.session)
     .then((data) => {
         console.log(data);
         res.json(data);
     })
 });
 
-router.get('/sign-secede', (req, res) => {
+router.post('/sign-secede', (req, res) => {
     console.log(`access to '${req.url}'`);
-    LoginCtrl.signSecede(DB_NAME, 'userdata', {email: 'asdf@gmail.com', password: '1234'}, req.session)
+    LoginCtrl.signSecede(DB_NAME, 'userdata', req.body, req.session)
     .then((data) => {
         console.log(data);
         res.json(data);
