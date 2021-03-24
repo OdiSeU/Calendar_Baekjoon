@@ -3,8 +3,9 @@ const router = express();
 const Mongodb = require('./mongo');
 const BjCrawl = require('./crawl');
 const LoginCtrl = require('./loginCtrl');
+const UserDB = require('./userdb');
 
-const DB_PWD = 'diab', DB_NAME = 'bj_calendar';
+const DB_PWD = 'dilab', DB_NAME = 'bj_calendar';
 const URL = `mongodb+srv://odiseu:${DB_PWD}@odiseu.lk7jw.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`;
 Mongodb.url = URL;
 
@@ -29,6 +30,7 @@ router.post('/crawl', (req, res) => {
 
 router.post('/sign-up', (req, res) => {
     console.log(`access to '${req.url}'`);
+    req.body.results = [];
     LoginCtrl.signUp(DB_NAME, 'userdata', req.body)
     .then((data) => {
         console.log(data);
@@ -46,6 +48,8 @@ router.post('/sign-in', (req, res) => {
     .then((data) => {
         console.log(data);
         res.json(data);
+        UserDB.getLastResult(req.body).then(data => {console.log(data)})
+        //UserDB.addResults(req.body, [['12345678', 1234, 4, 2016, 0, 88, 574, '2021/03/25 14:02:24']]).then(res => {console.log(res)})
     })
     .catch((err) => {
         console.log(err);

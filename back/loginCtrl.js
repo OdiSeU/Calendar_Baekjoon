@@ -16,10 +16,10 @@ class LoginCtrl {
      * @returns code: 상태, payload: 삽입된 document의 _id 배열
      */
     static signUp(db, collection, doc) {
-        return Mongodb.isExist(db_name, collection, {'email': doc['email']})
+        return Mongodb.isExist(db, collection, {'email': doc['email']})
         .then((res) => {
             if(res.payload) throw new LoginException(400, 'sign up error: id already exist');
-            else return Mongodb.insert(db_name, collection, doc);
+            else return Mongodb.insert(db, collection, doc);
         })
     }
     /**

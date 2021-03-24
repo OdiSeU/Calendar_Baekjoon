@@ -130,7 +130,6 @@ class MongoDB {
         return this.connect(db_name, (dbo) => {
             return dbo.collection(collection).updateMany(query, values)
             .then((res) => {
-                console.log(res);
                 console.log(`${res.matchedCount} document(s) found.`);
                 console.log(`${res.upsertedCount} document(s) updated.`);
                 return values['$set'];
