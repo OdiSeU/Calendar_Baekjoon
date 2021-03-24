@@ -1,37 +1,27 @@
 const Mongodb = require('./mongo');
 
+class LoginException {
+    constructor(code, msg) {
+        this.code = code;
+        this.message = msg;
+    }
+}
+
 class LoginCtrl {
     static signUp(db_name, collection, doc) {
         return Mongodb.isExist(db_name, collection, {'email': doc['email']})
         .then((res) => {
-            if(res.payload) throw 400;
+            if(res.payload) throw new LoginException(400, 'sign up error: id already exist');
             else return Mongodb.insert(db_name, collection, doc);
-        })
-        .catch((err) => {
-            let res = {code: err};
-            switch(err) {
-                case 400: res.payload = 'sign up error: id already exist'; break;
-                default: res.payload = err.payload;
-            }
-            return res;
         })
     }
     static signIn(db, collection, doc, session) {
         return Mongodb.find(db, collection, {'email': doc['email']})
         .then((res) => {
-            if(res.payload.length == 0) throw 400;
-            if(res.payload[0]['password'] != doc['password']) throw 401;
+            if(res.payload.length == 0) throw new LoginException(400, 'sign in error : id does not exist');
+            if(res.payload[0]['password'] != doc['password']) new LoginException(400, 'sign in error : password does not match');
             session.email = res.payload[0]['email'];
             return {code: 200, payload: res.payload[0]['email']};
-        })
-        .catch((err) => {
-            let res = {code: err};
-            switch(err) {
-                case 400: res.payload = 'sign in error : id does not exist'; break;
-                case 401: res.payload = 'sign in error : password does not match'; break;
-                default: res.payload = err.payload;
-            }
-            return res;
         })
     }
     static signSecede(db, collection, doc, session) {
