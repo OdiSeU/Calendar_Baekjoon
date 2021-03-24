@@ -1,5 +1,13 @@
 const mongo = require('mongodb'); 
 
+
+class MongoException {
+    constructor(code, msg) {
+        this.code = code;
+        this.message = msg;
+    }
+}
+
 /**
  * MongoDB Control Module
  * Please set 'MongoDB.url'
@@ -22,8 +30,7 @@ class MongoDB {
         })
         .catch((err) => {
             console.log(err);
-            if(!this.url) console.log("\n\n\nPlease set\nMongoDB.url = '...'\n\n\n");
-            return {code: 300, payload: 'mongodb error'};
+            throw new MongoException(300, 'MongoDB error');
         })
         .then((data) => {
             connected.close();

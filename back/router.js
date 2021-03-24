@@ -4,7 +4,7 @@ const Mongodb = require('./mongo');
 const BjCrawl = require('./crawl');
 const LoginCtrl = require('./loginCtrl');
 
-const DB_PWD = 'dilab', DB_NAME = 'bj_calendar';
+const DB_PWD = 'diab', DB_NAME = 'bj_calendar';
 const URL = `mongodb+srv://odiseu:${DB_PWD}@odiseu.lk7jw.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`;
 Mongodb.url = URL;
 
@@ -20,6 +20,10 @@ router.post('/crawl', (req, res) => {
     .then((data) => {
         console.log(data);
         res.json(data);
+    })
+    .catch((err) => {
+        console.log(err);
+        res.json(err);
     });
 });
 
@@ -30,6 +34,10 @@ router.post('/sign-up', (req, res) => {
         console.log(data);
         res.json(data);
     })
+    .catch((err) => {
+        console.log(err);
+        res.json(err);
+    });
 });
 
 router.post('/sign-in', (req, res) => {
@@ -39,6 +47,10 @@ router.post('/sign-in', (req, res) => {
         console.log(data);
         res.json(data);
     })
+    .catch((err) => {
+        console.log(err);
+        res.json(err);
+    });
 });
 
 router.post('/sign-secede', (req, res) => {
@@ -48,6 +60,10 @@ router.post('/sign-secede', (req, res) => {
         console.log(data);
         res.json(data);
     })
+    .catch((err) => {
+        console.log(err);
+        res.json(err);
+    });
 });
 
 router.get('/sign-check', (req, res) => {
@@ -57,6 +73,10 @@ router.get('/sign-check', (req, res) => {
         console.log(data);
         res.json(data);
     })
+    .catch((err) => {
+        console.log(err);
+        res.json(err);
+    });
 });
 
 router.get('/sign-out', (req, res) => {
@@ -66,6 +86,10 @@ router.get('/sign-out', (req, res) => {
         console.log(data);
         res.json(data);
     })
+    .catch((err) => {
+        console.log(err);
+        res.json(err);
+    });
 });
 
 module.exports = router;
