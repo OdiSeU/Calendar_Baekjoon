@@ -6,7 +6,6 @@ import Login from "./Login";
 import "./index.css";
 import moment from "moment";
 
-
 export default class Container extends Component {
   state = {
     yearNmonth: moment(),
@@ -16,12 +15,11 @@ export default class Container extends Component {
 
   /*날짜 더블 클릭하면 전달로 이동함 그냥 만든 클릭함수임 뭐 만들지 몰라서*/
   click = (clickedDate) => {
-
     console.log(clickedDate);
     if (moment(clickedDate).isSame(this.state.selected, "day")) {
       this.moveMonth(-1);
     }
-  }
+  };
   moveMonth = (month) => {
     this.setState({
       yearNmonth: this.state.yearNmonth.add(month, "months"),
@@ -29,10 +27,9 @@ export default class Container extends Component {
   };
   backToday = () => {
     this.setState({
-      yearNmonth: moment()
-    })
-
-  }
+      yearNmonth: moment(),
+    });
+  };
 
   /**
    * 달력 클릭 함수
@@ -71,8 +68,8 @@ export default class Container extends Component {
             YMD={this.state.yearNmonth.format("YYYY-MM-DD")}
             selected={this.state.selected}
             changeSelect={this.changeSelect}
+            moveMonth={this.moveMonth}
           />
-
         </div>
         <Login></Login>
       </div>
