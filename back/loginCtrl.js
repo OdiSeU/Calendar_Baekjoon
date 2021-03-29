@@ -36,7 +36,7 @@ class LoginCtrl {
             if(res.payload.length == 0) throw new LoginException(400, 'sign in error : id does not exist');
             if(res.payload[0]['password'] != doc['password']) new LoginException(400, 'sign in error : password does not match');
             session.email = res.payload[0]['email'];
-            return {code: 200, payload: res.payload[0]['email']};
+            return {code: 200, payload: res.payload[0]};
         })
     }
     /**
