@@ -54,7 +54,7 @@ router.post('/sign-in', (req, res) => {
     .then((data) => {
         console.log('crawl');
         console.log(data);
-        return BjCrawl.crawl({user_id: userdata['bjid'], language_id: 28}, data.payload);
+        return BjCrawl.crawl({user_id: userdata['bjid'], language_id: 28}, data.payload[0]);
     })
     .then((data) => {
         console.log('add');

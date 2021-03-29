@@ -16,7 +16,7 @@ class UserDB {
         return Mongodb.find(DB_NAME, COLL_NAME, query, { _id: 0, results: 1 })
         .then((res) => {
             let results = res.payload[0]['results'];
-            if(!results.length) return { code: 300, payload: 0 };
+            if(!results.length) return { code: 300, payload: [0] };
             return { code: res.code, payload: results[0] };
         });
     }
