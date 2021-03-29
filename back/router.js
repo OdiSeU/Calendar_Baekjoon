@@ -44,12 +44,25 @@ router.post('/sign-up', (req, res) => {
 
 router.post('/sign-in', (req, res) => {
     console.log(`access to '${req.url}'`);
+    let userdata = '';
     LoginCtrl.signIn(DB_NAME, 'userdata', req.body, req.session)
     .then((data) => {
+        userdata = data.payload;
         console.log(data);
+        return UserDB.getLastResult(req.body);
+    })
+    .then((data) => {
+        console.log('crawl');
+        console.log(data);
+        return BjCrawl.crawl({user_id: userdata['bjid'], language_id: 28}, data.payload);
+    })
+    .then((data) => {
+        console.log('add');
+        console.log(data);
+        return UserDB.addResults(userdata, data);
+    })
+    .then((data)=> {
         res.json(data);
-        UserDB.getLastResult(req.body).then(data => {console.log(data)})
-        //UserDB.addResults(req.body, [['12345678', 1234, 4, 2016, 0, 88, 574, '2021/03/25 14:02:24']]).then(res => {console.log(res)})
     })
     .catch((err) => {
         console.log(err);
