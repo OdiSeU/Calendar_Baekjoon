@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import moment from "moment";
 
 export default class AllDays extends Component {
+
   Days = (firstFormat, weekIdx) => {
     const _days = [];
     for (let i = 0; i < 7; i++) {
@@ -17,11 +18,13 @@ export default class AllDays extends Component {
   };
 
   makeDayCompo = (Days, calendarMonthYear, selected, fn = () => { }) => {
+  
     const thisMonth = moment(calendarMonthYear);
-
+    
     return Days.map((dayInfo, i) => {
       let cssUseName = "days-color";
-
+      
+    
       if (!thisMonth.isSame(dayInfo.YMDFormat, "month")) {
         cssUseName = "not-thisMonth";
       } else if (i === 0) {
@@ -36,10 +39,11 @@ export default class AllDays extends Component {
 
       return (
         <div
-          className={"AllDays-days " + cssUseName}
+          className={"AllDays-days "+cssUseName}
           onClick={() => fn(dayInfo.YMDFormat)}
+          key={`${i}`}
         >
-          <label className="AllDays-days-label">{dayInfo.getDay}</label>
+          <label className="AllDays-days-label" >{dayInfo.getDay}</label>
         </div>
       );
     });
@@ -47,7 +51,7 @@ export default class AllDays extends Component {
 
   render() {
     return (
-      <div className="AllDays-week">
+      <div className="AllDays-week" >
         {this.makeDayCompo(
           this.Days(
             this.props.firstDayOfThisWeekformat,

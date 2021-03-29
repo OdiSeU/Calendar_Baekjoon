@@ -11,6 +11,9 @@ export default class Container extends Component {
     yearNmonth: moment(),
     today: moment(),
     selected: moment().format("YYYY-MM-DD"),
+    end: 5,
+    begin: 0,
+
   };
 
   /*날짜 더블 클릭하면 전달로 이동함 그냥 만든 클릭함수임 뭐 만들지 몰라서*/
@@ -20,6 +23,14 @@ export default class Container extends Component {
       this.moveMonth(-1);
     }
   };
+  topmoveMonth =(month)=>{
+    this.setState({
+      yearNmonth: this.state.yearNmonth.add(month, "months"),
+      end: 5,
+      begin: 0,
+    });
+
+  }
   moveMonth = (month) => {
     this.setState({
       yearNmonth: this.state.yearNmonth.add(month, "months"),
@@ -30,6 +41,40 @@ export default class Container extends Component {
       yearNmonth: moment(),
     });
   };
+
+
+  Down_week = () => {
+    this.setState({
+      end: this.state.end - 1,
+      begin: this.state.begin - 1,
+    });
+    if(this.state.end===3){
+      this.moveMonth(-1);
+      this.setState({
+        end:7,
+        begin:2,
+      })
+    }
+    
+  };
+  Up_week = () => {
+    this.setState({
+      end: this.state.end + 1,
+      begin: this.state.begin + 1,
+    });
+    console.log(this.state.begin);
+    if(this.state.begin===2){
+      this.moveMonth(+1);
+      this.setState({
+        end:3,
+        begin:-2,
+     
+     })
+    
+    }
+  };
+
+
 
   /**
    * 달력 클릭 함수
@@ -46,11 +91,11 @@ export default class Container extends Component {
     });
     this.click(clickedDate);
 
-    if (moment(clickedDate).isBefore(this.state.yearNmonth, "month")) {
+    /*if (moment(clickedDate).isBefore(this.state.yearNmonth, "month")) {
       this.moveMonth(-1);
     } else if (moment(clickedDate).isAfter(this.state.yearNmonth, "month")) {
       this.moveMonth(1);
-    }
+    }*/
   };
 
   render() {
@@ -62,6 +107,8 @@ export default class Container extends Component {
             today={this.state.today.format("은 YYYY년 MM월 DD일 입니다")}
             moveMonth={this.moveMonth}
             backToday={this.backToday}
+            topmoveMonth={this.topmoveMonth}
+
           />
           <DayOfTheWeek className="Week-base"></DayOfTheWeek>
           <MainCalendar
@@ -69,6 +116,12 @@ export default class Container extends Component {
             selected={this.state.selected}
             changeSelect={this.changeSelect}
             moveMonth={this.moveMonth}
+            begin={this.state.begin}
+            end={this.state.end}
+            Down_week={this.Down_week}
+            Up_week={this.Up_week}
+            key={this.state.today}
+
           />
         </div>
         <Login></Login>

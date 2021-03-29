@@ -1,26 +1,11 @@
 import React, { Component } from "react";
-import DayOfTheWeek from "./DayOfTheWeek";
+// import DayOfTheWeek from "./DayOfTheWeek";
 import AllDays from "./AllDays";
 import moment from "moment";
 
 export default class MainCalendar extends Component {
-  state = {
-    end: 6,
-    begin: 0,
-  };
-  Down_week = () => {
-    this.setState({
-      end: this.state.end - 1,
-      begin: this.state.begin - 1,
-    });
-  };
-  Up_week = () => {
-    this.setState({
-      end: this.state.end + 1,
-      begin: this.state.begin + 1,
-    });
-  };
 
+ 
   Weeks = (monthYear, selected, click) => {
     const firstDayOfMonth = moment(monthYear).startOf("month");
     const firstDateOfMonth = firstDayOfMonth.get("d");
@@ -42,8 +27,7 @@ export default class MainCalendar extends Component {
         />
       );
     };
-
-    for (let idx = this.state.begin; idx < this.state.end; idx++) {
+    for (let idx = this.props.begin; idx <= this.props.end; idx++) {
       default_weeks(idx);
     }
     return _Weeks;
@@ -53,15 +37,17 @@ export default class MainCalendar extends Component {
     return (
       <div className="MainCalendar-base">
         <div>
-          <button onClick={this.Down_week}>Down!</button>
-          <button onClick={this.Up_week}>Up!</button>
+          <button onClick={this.props.Down_week}>Down!</button>
+          <button onClick={this.props.Up_week}>Up!</button>
+        </div >
+        {/* <DayOfTheWeek /> */}
+        <div className="Scroll">
+         {this.Weeks(
+           this.props.YMD,
+           this.props.selected,
+           this.props.changeSelect
+          )}
         </div>
-        <DayOfTheWeek />
-        {this.Weeks(
-          this.props.YMD,
-          this.props.selected,
-          this.props.changeSelect
-        )}
       </div>
     );
   }

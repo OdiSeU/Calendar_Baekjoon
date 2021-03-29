@@ -3,7 +3,7 @@
   width: 100vw;
   height: 100vh;
   grid-template-rows: 0.05fr 0.05fr 0.3fr;
-  grid-template-columns: 0.3fr;
+  grid-template-columns:0.3fr;
   grid-template-areas:
     "header"
     "week"
@@ -14,15 +14,13 @@
   background-color: peru;
 }
 
+.Week-base{
+  grid-area: week;
+}
 .Top-base {
   grid-area: header;
   background-color: #2d3436;
   color:#b2bec3;
-}
-
-.Week-base{
-  grid-area :week;
-  background-color: red;
 }
 
 .Top-yearNmonth {
@@ -103,10 +101,10 @@
   flex-grow: 1;
 }
 
-.AllDays-days:nth-child(odd) {
+/*.AllDays-days:nth-child(odd) {
   border-left: none;
   border-right: none;
-}
+}*/
 
 .AllDays-days-label {
   display: inline-block;
@@ -121,23 +119,12 @@
   color:#808e9b;
 }
 
-.selected {
-  background-color: #d2dae2;
+.selected  {
+  border-style: solid;
+  border-width: 1px;
+  border-color: peachpuff;
 }
-
 .selected label {
-  font-size: 1.2rem;
-  color: #1e272e;
-  width: 25px;
-  height: 25px;
+  color:#d2dae2 ;
 }
 
-.Login-base input{
-  display: inline-block;
-  margin: 10px;
-  width:200px;
-  height:40px;
-}
-.Login-buttons{
-  font-size: 20px;
-}

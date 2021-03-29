@@ -9,15 +9,21 @@ export default class Top extends Component {
      console.log("moment", moment().format("YYYY-MM"))*/
     return (
       <div className="Top-base">
-        <h3 className="Top-today"><span className="Top-goToday" onClick={() => {
-          this.props.backToday();
-        }}>오늘
-        </span>
-          {this.props.today}</h3>
+        <h3 className="Top-today">
+          <span
+            className="Top-goToday"
+            onClick={() => {
+              this.props.backToday();
+            }}
+          >
+            오늘
+          </span>
+          {this.props.today}
+        </h3>
         <ul className="Top-buttons">
           <li
             onClick={() => {
-              this.props.moveMonth(+1);
+              this.props.topmoveMonth(+1);
             }}
           >
             <img src={right} alt="right"></img>
@@ -27,7 +33,7 @@ export default class Top extends Component {
           </li>
           <li
             onClick={() => {
-              this.props.moveMonth(-1);
+              this.props.topmoveMonth(-1);
             }}
           >
             <img src={left} alt="left"></img>

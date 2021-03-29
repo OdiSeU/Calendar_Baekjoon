@@ -37,8 +37,10 @@ export default class DayOfTheWeek extends Component {
 
   render() {
     return (
-      <div className="MainCalendar-header">
-        {this.mapWeekdayOrend(this.weekdateToArray(this.props.dates))}
+      <div className="Week-base">
+        <div className="MainCalendar-header">
+          {this.mapWeekdayOrend(this.weekdateToArray(this.props.dates))}
+        </div>
       </div>
     );
   }
