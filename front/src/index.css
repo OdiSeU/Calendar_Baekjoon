@@ -127,4 +127,13 @@
 .selected label {
   color:#d2dae2 ;
 }
-
+ .Scroll{
+  overflow-y: scroll;
+  height: 500px;
+}
+ *{
+  -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
+} 

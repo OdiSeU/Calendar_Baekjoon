@@ -12,7 +12,7 @@ export default class Container extends Component {
     today: moment(),
     selected: moment().format("YYYY-MM-DD"),
     end: 5,
-    begin: 0,
+    begin: -1,
 
   };
 
@@ -26,7 +26,7 @@ export default class Container extends Component {
   topmoveMonth =(month)=>{
     this.setState({
       yearNmonth: this.state.yearNmonth.add(month, "months"),
-      end: 5,
+      end: 6,
       begin: 0,
     });
 
@@ -51,7 +51,7 @@ export default class Container extends Component {
     if(this.state.end===3){
       this.moveMonth(-1);
       this.setState({
-        end:7,
+        end:8,
         begin:2,
       })
     }
@@ -62,12 +62,12 @@ export default class Container extends Component {
       end: this.state.end + 1,
       begin: this.state.begin + 1,
     });
-    console.log(this.state.begin);
+    
     if(this.state.begin===2){
       this.moveMonth(+1);
       this.setState({
         end:3,
-        begin:-2,
+        begin:-3,
      
      })
     
