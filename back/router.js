@@ -46,20 +46,28 @@ router.post('/sign-in', (req, res) => {
     console.log(`access to '${req.url}'`);
     let userdata = '';
     LoginCtrl.signIn(DB_NAME, 'userdata', req.body, req.session)
+    // .then((data) => {
+    //     userdata = data.payload;
+    //     console.log(data);
+    //     return UserDB.getLastResult(req.body);
+    // })
+    // .then((data) => {
+    //     console.log('crawl');
+    //     console.log(data);
+    //     return BjCrawl.crawl({user_id: userdata['bjid'], language_id: 28}, data.payload[0]);
+    // })
+    // .then((data) => {
+    //     console.log('add');
+    //     console.log(data);
+    //     return UserDB.addResults(userdata, data);
+    // })
+    // .then((data)=> {
+    //     res.json(data);
+    // })
     .then((data) => {
         userdata = data.payload;
         console.log(data);
-        return UserDB.getLastResult(req.body);
-    })
-    .then((data) => {
-        console.log('crawl');
-        console.log(data);
-        return BjCrawl.crawl({user_id: userdata['bjid'], language_id: 28}, data.payload[0]);
-    })
-    .then((data) => {
-        console.log('add');
-        console.log(data);
-        return UserDB.addResults(userdata, data);
+        return UserDB.getResults(req.body, '2021-02-01 03:27:13', '2021-02-07 14:48:16');
     })
     .then((data)=> {
         res.json(data);
