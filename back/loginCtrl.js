@@ -1,51 +1,75 @@
 const Mongodb = require('./mongo');
 
+class LoginException {
+    constructor(code, msg) {
+        this.code = code;
+        this.message = msg;
+    }
+}
+
 class LoginCtrl {
-    static signUp(db_name, collection, doc) {
-        return Mongodb.isExist(db_name, collection, {'email': doc['email']})
+    /**
+     * 
+     * @param {string} db document가 저장될 db이름
+     * @param {string} collection document가 저장될 collection이름
+     * @param {object} doc 저장할 document
+     * @returns code: 상태, payload: 삽입된 document의 _id 배열
+     */
+    static signUp(db, collection, doc) {
+        return Mongodb.isExist(db, collection, {'email': doc['email']})
         .then((res) => {
-            if(res.payload) throw 400;
-            else return Mongodb.insert(db_name, collection, doc);
-        })
-        .catch((err) => {
-            let res = {code: err};
-            switch(err) {
-                case 400: res.payload = 'sign up error: id already exist'; break;
-                default: res.payload = err.payload;
-            }
-            return res;
+            if(res.payload) throw new LoginException(400, 'sign up error: id already exist');
+            else return Mongodb.insert(db, collection, doc);
         })
     }
+    /**
+     * 
+     * @param {string} db document를 찾을 db이름
+     * @param {string} collection  document를 찾을 collection이름
+     * @param {object} doc { email: '123@gmail.com', password: '1234' }
+     * @param {*} session req.session
+     * @returns code: 상태, payload: 로그인 된 id
+     */
     static signIn(db, collection, doc, session) {
-        return Mongodb.find(db, collection, {'email': doc['email']})
+        return Mongodb.find(db, collection, { email: doc['email'] })
         .then((res) => {
-            if(res.payload.length == 0) throw 400;
-            if(res.payload[0]['password'] != doc['password']) throw 401;
+            if(res.payload.length == 0) throw new LoginException(400, 'sign in error : id does not exist');
+            if(res.payload[0]['password'] != doc['password']) new LoginException(400, 'sign in error : password does not match');
             session.email = res.payload[0]['email'];
-            return {code: 200, payload: res.payload[0]['email']};
-        })
-        .catch((err) => {
-            let res = {code: err};
-            switch(err) {
-                case 400: res.payload = 'sign in error : id does not exist'; break;
-                case 401: res.payload = 'sign in error : password does not match'; break;
-                default: res.payload = err.payload;
-            }
-            return res;
+            return {code: 200, payload: res.payload[0]};
         })
     }
+    /**
+     * 
+     * @param {string} db document를 삭제할 db이름
+     * @param {string} collection document를 삭제할 collection이름
+     * @param {object} doc { email: '123@gmail.com', password: '1234' }
+     * @param {*} session req.session
+     * @returns code: 상태, payload: { query: query, count: 삭제된 document 수 }
+     */
     static signSecede(db, collection, doc, session) {
         return this.signOut(session)
         .then(()=>Mongodb.delete(db, collection, doc));
     }
-
+    /**
+     * 
+     * @param {*} session req.session
+     * @returns code:200, payload: '1234@gmail.com'
+     */
     static signCheck(session) {
         return new Promise((resolve) => {
-            resolve(session.email);
+            let res = { code:200, payload: session.email };
+            resolve(res);
         });
     }
+    /**
+     * 
+     * @param {*} session req.session
+     * @returns code:200, payload: '1234@gmail.com'
+     */
     static signOut(session) {
         return new Promise((resolve) => {
+            let res = { code:200, payload: session.email };
             resolve(session.email);
             delete session.email;
         });
