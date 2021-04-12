@@ -7,13 +7,13 @@ import "./index.css";
 import moment from "moment";
 
 export default class Container extends Component {
+
   state = {
     yearNmonth: moment(),
     today: moment(),
     selected: moment().format("YYYY-MM-DD"),
     end: 5,
     begin: -1,
-
   };
 
   /*날짜 더블 클릭하면 전달로 이동함 그냥 만든 클릭함수임 뭐 만들지 몰라서*/
@@ -23,28 +23,46 @@ export default class Container extends Component {
       this.moveMonth(-1);
     }
   };
-  topmoveMonth =(month)=>{
-    this.setState({
-      yearNmonth: this.state.yearNmonth.add(month, "months"),
-      end: 6,
-      begin: 0,
-    });
 
-  }
   moveMonth = (month) => {
     this.setState({
       yearNmonth: this.state.yearNmonth.add(month, "months"),
+     
     });
   };
   backToday = () => {
     this.setState({
       yearNmonth: moment(),
+     
     });
   };
 
+  go_up= ()=>{
+    // console.log(document.getElementsByClassName("remakeWeek")[0])
+     const first =document.getElementsByClassName("remakeWeek")[0];
+     // const second =document.getElementsByClassName("nextWeek")[0];
+     // const a= second.children[this.state.idx]
+     // const aa=a.cloneNode(true);
+     const a=first.children[0]
+     first.removeChild(first.children[0])
+     //first.append(a)
+     console.log(first.children[1].children[6])
+     if(first.children[1].children[6].className==="AllDays-days not-thisMonth"){
+       console.log("달 변경")
+       this.setState({
+        yearNmonth: this.state.yearNmonth.add(1, "months"),
+       
+      });
+     }
+    // console.log(first.children[0])
+     //first.append(aa)
+     // this.setState({
+     //   idx:(this.state.idx+1)%6
+     // })
+   }
 
   Down_week = () => {
-    this.setState({
+    /*this.setState({
       end: this.state.end - 1,
       begin: this.state.begin - 1,
     });
@@ -54,7 +72,9 @@ export default class Container extends Component {
         end:8,
         begin:2,
       })
-    }
+    }*/
+
+    
     
   };
   Up_week = () => {
@@ -98,7 +118,14 @@ export default class Container extends Component {
     }*/
   };
 
+  /*componentDidMount(){
+    const first = document.getElementsByClassName("remakeWeek")[0]
+    console.log(first.children)
+  }
+  */
+
   render() {
+ 
     return (
       <div>
         <div className="container">
@@ -113,6 +140,7 @@ export default class Container extends Component {
           <DayOfTheWeek className="Week-base"></DayOfTheWeek>
           <MainCalendar
             YMD={this.state.yearNmonth.format("YYYY-MM-DD")}
+            go_up={this.go_up}
             selected={this.state.selected}
             changeSelect={this.changeSelect}
             moveMonth={this.moveMonth}

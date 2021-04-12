@@ -23,7 +23,7 @@ export default class Top extends Component {
         <ul className="Top-buttons">
           <li
             onClick={() => {
-              this.props.topmoveMonth(+1);
+              this.props.moveMonth(+1);
             }}
           >
             <img src={right} alt="right"></img>
@@ -33,7 +33,7 @@ export default class Top extends Component {
           </li>
           <li
             onClick={() => {
-              this.props.topmoveMonth(-1);
+              this.props.moveMonth(-1);
             }}
           >
             <img src={left} alt="left"></img>

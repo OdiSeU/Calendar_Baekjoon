@@ -3,7 +3,8 @@ import moment from "moment";
 
 export default class AllDays extends Component {
 
-  Days = (firstFormat, weekIdx) => {
+  Days = (firstFormat, YM,weekIdx) => {
+   
     const _days = [];
     for (let i = 0; i < 7; i++) {
       const Day = moment(firstFormat).add(i, "d");
@@ -11,9 +12,12 @@ export default class AllDays extends Component {
         YMDFormat: Day.format("YYYY-MM-DD"),
         getDay: Day.format("D"),
         isWeekned: false,
-        weekIdx,
+        YM,
+       _weekIdx:weekIdx,
       });
+      
     }
+   console.log(_days)
     return _days;
   };
 
@@ -49,13 +53,20 @@ export default class AllDays extends Component {
     });
   };
 
+  test=()=>{
+    const t1 = document.getElementsByClassName("AllDays-week")
+   // console.log(t1[1])
+  }
+
   render() {
+   // this.test()
     return (
       <div className="AllDays-week" >
         {this.makeDayCompo(
           this.Days(
             this.props.firstDayOfThisWeekformat,
-            this.props.thisCalendar
+            this.props.thisCalendar,
+            this.props.weekIdx
           ),
           this.props.thisCalendar,
           this.props.selected,
